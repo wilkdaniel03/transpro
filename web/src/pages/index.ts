@@ -1,5 +1,9 @@
-import Dashboard from './Dashboard';
+import DashboardPage from './Dashboard';
+import NotificationsPage from './Notifications';
+import ProfilePage from './Profile';
 
 export {
-	Dashboard
+	DashboardPage,
+	NotificationsPage,
+	ProfilePage
 };
