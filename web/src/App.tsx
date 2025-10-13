@@ -1,9 +1,10 @@
 import { ChakraProvider, defaultSystem } from '@chakra-ui/react';
+import Heading from './Heading';
 
 const App = () => {
 	return (
 		<ChakraProvider value={defaultSystem}>
-			<h1>Hello!</h1>
+			<Heading/>
 		</ChakraProvider>
 	);
 };
