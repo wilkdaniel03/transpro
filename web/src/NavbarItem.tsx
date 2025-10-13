@@ -5,8 +5,9 @@ const NavbarItem = (props: { content: string }) => {
 		<chakra.Button
 			w="100%"
 			borderRadius="0"
-			bg="yellow.500"
-			color="black">{props.content}</chakra.Button>
+			bg="none"
+			color="black"
+			_hover={{bg:"yellow.500"}}>{props.content}</chakra.Button>
 	);
 }
 
