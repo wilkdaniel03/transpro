@@ -8,6 +8,8 @@
     "build": "tsc -b && vite build"
   },
   "dependencies": {
+    "@chakra-ui/react": "^3.27.1",
+    "@emotion/react": "^11.14.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
