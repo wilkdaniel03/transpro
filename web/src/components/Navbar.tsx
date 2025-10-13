@@ -6,7 +6,7 @@ const Navbar = () => {
 	return (
 		<chakra.Flex h="100%" paddingY="5px" flexDirection="column" justifyContent="space-between" alignItems="center">
 			<chakra.Box><Heading>Cos tam transport exclusive</Heading></chakra.Box>
-			<chakra.Box>
+			<chakra.Box w="100%">
 				<NavbarItem content="Panel Administracyjny"/>
 				<NavbarItem content="Powiadomienia"/>
 				<NavbarItem content="Profil"/>
