@@ -1,8 +1,8 @@
 import * as chakra from '@chakra-ui/react';
 
-const Heading = () => {
+const Heading = (props: {children: React.ReactNode}) => {
 	return (
-		<chakra.Heading>Cos tam transport exclusive</chakra.Heading>
+		<chakra.Heading>{props.children}</chakra.Heading>
 	);
 }
 
