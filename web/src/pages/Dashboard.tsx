@@ -1,8 +1,8 @@
-import * as chakra from '@chakra-ui/react';
+import { Heading } from '../components';
 
 const DashboardPage = () => {
 	return (
-		<chakra.GridItem padding="20px"><Heading>Panel Administracyjny</Heading></chakra.GridItem>
+		<Heading>Panel Administracyjny</Heading>
 	);
 }
 
