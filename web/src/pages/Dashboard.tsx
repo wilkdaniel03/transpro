@@ -42,9 +42,9 @@ const DashboardPage = () => {
 			<chakra.TableRoot size="md">
 				<chakra.TableHeader>
 					<chakra.TableRow>
-						<chakra.TableCell>Nazwa</chakra.TableCell>
-						<chakra.TableCell>Typ</chakra.TableCell>
-						<chakra.TableCell>Rezerwacja</chakra.TableCell>
+						<chakra.TableCell><chakra.Text fontWeight="bold">Nazwa</chakra.Text></chakra.TableCell>
+						<chakra.TableCell><chakra.Text fontWeight="bold">Typ</chakra.Text></chakra.TableCell>
+						<chakra.TableCell><chakra.Text fontWeight="bold">Rezerwacja</chakra.Text></chakra.TableCell>
 					</chakra.TableRow>
 				</chakra.TableHeader>
 				<chakra.TableBody>
