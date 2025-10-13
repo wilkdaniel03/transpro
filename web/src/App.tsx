@@ -13,7 +13,6 @@ const App = () => {
 				templateColumns="25% 75%"
 			>
 				<chakra.GridItem bg='gray.200' paddingTop="10px"><Navbar/></chakra.GridItem>
-				<chakra.GridItem padding="20px"><Heading>Panel Administracyjny</Heading></chakra.GridItem>
 			</chakra.Grid>
 		</ChakraProvider>
 	);
