@@ -50,7 +50,7 @@ const DashboardPage = () => {
 				<chakra.TableBody>
 					{transportData.map((obj,i) => {
 						return (
-							<chakra.TableRow key={i}>
+							<chakra.TableRow key={i} _hover={{bg:"gray.100"}}>
 								<chakra.TableCell>{obj.name}</chakra.TableCell>
 								<chakra.TableCell>{obj.type}</chakra.TableCell>
 								<chakra.TableCell>{obj.date}</chakra.TableCell>
