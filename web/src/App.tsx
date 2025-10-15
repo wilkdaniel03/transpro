@@ -8,7 +8,8 @@ const router = createBrowserRouter([
 		{ path: "/dashboard", element: <DashboardPage/> },
 		{ path: "/notifications", element: <NotificationsPage/> },
 		{ path: "/profile", element: <ProfilePage/> },
-		{ path: "/*", element: <Navigate to="/dashboard"/> }
+		{ path: "/*", element: <Navigate to="/dashboard"/> },
+		{ path: "/", element: <Navigate to="/dashboard"/> }
 	]},
 	{ path: "/*", element: <Navigate to="/"/> }
 ])
