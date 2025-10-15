@@ -1,5 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
+from fastapi.middleware import cors
 import os
 import json
 from datetime import date
@@ -16,6 +17,14 @@ DB_NAME = os.environ.get("LW2_DB_NAME")
 MODE = os.environ.get("LW2_API_MODE")
 
 app = FastAPI()
+
+app.add_middleware(
+    cors.CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 metadata = MetaData()
 TransportTable = transport_table_factory(metadata)
