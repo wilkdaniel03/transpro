@@ -1,9 +1,11 @@
-from sqlmodel import Field, SQLModel
-from datetime import datetime
+from sqlalchemy import Table, MetaData, Column, Integer, String, Date
 
 
-class Transport(SQLModel,table=True):
-    id: int = Field(primary_key=True)
-    name: str
-    type: str
-    reservation: datetime
+def transport_table_factory(metadata: MetaData) -> Table:
+    return Table(
+        "transport",
+        metadata,
+        Column("id",Integer,autoincrement=True,primary_key=True),
+        Column("type",String(50),nullable=False),
+        Column("reservation",Date,nullable=False)
+    )
