@@ -1,41 +1,34 @@
+import { useEffect, useState } from 'react';
 import * as chakra from '@chakra-ui/react';
 import { Heading } from '../components';
 
 interface ITransport {
+	id: number;
 	name: string;
 	type: string;
-	date: string;
+	reservation: string;
 }
 
-const transportData: ITransport[] = [
-	{
-		name: "PKS Krakow",
-		type: "Autobus",
-		date: "2025-10-20"
-	},
-	{
-		name: "LOT",
-		type: "Samolot",
-		date: "2025-11-03"
-	},
-	{
-		name: "Intercity",
-		type: "Pociąg",
-		date: "2025-10-22"
-	},
-	{
-		name: "Uber",
-		type: "Taksówka",
-		date: "2025-10-14"
-	},
-	{
-		name: "FlixBus",
-		type: "Autobus",
-		date: "2025-10-25"
-	}
-];
+const fetchTransports = async () => {
+	const headers = new Headers();
+	headers.append("Accept","application/json");
+	headers.append("Access-Control-Allow-Origin","*");
+	const res = await fetch("http://127.0.0.1:8081/transport",{method:"GET",headers:headers});
+	const data  = await res.json();
+	return data;
+};
 
 const DashboardPage = () => {
+	let [transportData,setTransportData] = useState<ITransport[]>([]);
+
+	useEffect(() => {
+		fetchTransports().then((res) => {
+			setTransportData(res['data']);
+		});
+	},[]);
+
+	console.log(transportData);
+
 	return (
 		<>
 			<Heading>Panel Administracyjny</Heading>
@@ -53,7 +46,7 @@ const DashboardPage = () => {
 							<chakra.TableRow key={i} _hover={{bg:"gray.100"}}>
 								<chakra.TableCell>{obj.name}</chakra.TableCell>
 								<chakra.TableCell>{obj.type}</chakra.TableCell>
-								<chakra.TableCell>{obj.date}</chakra.TableCell>
+								<chakra.TableCell>{obj.reservation}</chakra.TableCell>
 							</chakra.TableRow>
 						);
 					})}
