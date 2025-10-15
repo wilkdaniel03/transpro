@@ -1,0 +1,29 @@
+{
+	"transport": [
+		{
+			"name": "PKS Krakow",
+			"type": "Autobus",
+			"date": "2025-10-20"
+		},
+		{
+			"name": "LOT",
+			"type": "Samolot",
+			"date": "2025-11-03"
+		},
+		{
+			"name": "Intercity",
+			"type": "Pociąg",
+			"date": "2025-10-22"
+		},
+		{
+			"name": "Uber",
+			"type": "Taksówka",
+			"date": "2025-10-14"
+		},
+		{
+			"name": "FlixBus",
+			"type": "Autobus",
+			"date": "2025-10-25"
+		}
+	]
+}
