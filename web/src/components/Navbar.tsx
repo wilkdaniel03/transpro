@@ -9,7 +9,7 @@ const Navbar = () => {
 			<chakra.Box w="100%">
 				<NavbarItem content="Panel Administracyjny" linkPath="/dashboard"/>
 				<NavbarItem content="Powiadomienia" linkPath="/notifications"/>
-				<NavbarItem content="Profil" active={true} linkPath="/profile"/>
+				<NavbarItem content="Profil" linkPath="/profile"/>
 			</chakra.Box>
 			<chakra.Box h="10%"/>
 		</chakra.Flex>

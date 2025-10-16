@@ -4,17 +4,12 @@ import { Navbar } from '../components';
 
 const ContainerLayout = () => {
 	return (
-		<chakra.Grid
-			w="100vw"
-			h="100vh"
-			templateRows="1fr"
-			templateColumns="25% 75%"
-		>
-			<chakra.GridItem bg='gray.200' paddingTop="10px"><Navbar/></chakra.GridItem>
-			<chakra.GridItem padding="20px">
+		<>
+			<chakra.Box zIndex="2" position="fixed" w="25%" h="100%" bg='gray.200' paddingTop="10px"><Navbar/></chakra.Box>
+			<chakra.Box padding="20px" marginLeft="auto" w="75%">
 				<Outlet/>
-			</chakra.GridItem>
-		</chakra.Grid>
+			</chakra.Box>
+		</>
 	);
 }
 
