@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import * as chakra from '@chakra-ui/react';
-import { Heading } from '../components';
+import { Heading, Card } from '../components';
 
 interface ITransport {
 	id: number;
@@ -52,6 +52,9 @@ const DashboardPage = () => {
 	return (
 		<>
 			<Heading>Panel Administracyjny</Heading>
+			<chakra.Box w="33%">
+				<Card dotColor="green.500" title="Ilość transportów" content={transportData.length}/>
+			</chakra.Box>
 			{status != FetchStatus.Failed ? (
 				<chakra.TableRoot size="md">
 					<chakra.TableHeader>

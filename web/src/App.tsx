@@ -12,7 +12,7 @@ const router = createBrowserRouter([
 		{ path: "/", element: <Navigate to="/dashboard"/> }
 	]},
 	{ path: "/*", element: <Navigate to="/"/> }
-])
+]);
 
 const App = () => {
 	return (
@@ -20,6 +20,6 @@ const App = () => {
 			<RouterProvider router={router}/>
 		</ChakraProvider>
 	);
-};
+}
 
 export default App;
