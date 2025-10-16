@@ -2,12 +2,11 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware import cors
 import json
-from datetime import date
 from typing import Dict, Any
 from model.transport import transport_table_factory
 from sqlalchemy import create_engine, Table, MetaData, Connection, select, insert
-from dataclasses import dataclass
 from config import Config
+from dto.transport import Transport
 
 
 cfg = Config()
@@ -27,14 +26,6 @@ TransportTable = transport_table_factory(metadata)
 engine = create_engine(
     "mysql+pymysql://{}:{}@127.0.0.1:{}/{}".format(cfg.db.user,cfg.db.password,cfg.db.port,cfg.db.name))
 conn = engine.connect()
-
-
-@dataclass
-class Transport:
-    id: int
-    name: str
-    type: str
-    reservation: date
 
 
 @app.get("/")
