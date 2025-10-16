@@ -59,12 +59,16 @@ def load_transport_data() -> Dict[str,Any]:
     return json.loads(data_as_str)['transport']
 
 
+def init_db() -> None:
+    metadata.drop_all(engine)
+    metadata.create_all(engine)
+    conn.execute(insert(TransportTable),transport_data)
+    conn.commit()
+
+
 if __name__ == "__main__":
     should_reload = cfg.mode != "PROD"
     transport_data = load_transport_data()
     if cfg.mode == "PROD":
-        metadata.drop_all(engine)
-        metadata.create_all(engine)
-        conn.execute(insert(TransportTable),transport_data)
-        conn.commit()
+        init_db()
     uvicorn.run("main:app",port=8081,reload=should_reload)
