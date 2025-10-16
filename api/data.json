@@ -1,29 +1,33 @@
 {
-	"transport": [
-		{
-			"name": "PKS Krakow",
-			"type": "Autobus",
-			"reservation": "2025-10-20"
-		},
-		{
-			"name": "LOT",
-			"type": "Samolot",
-			"reservation": "2025-11-03"
-		},
-		{
-			"name": "Intercity",
-			"type": "Pociag",
-			"reservation": "2025-10-22"
-		},
-		{
-			"name": "Uber",
-			"type": "Taksowka",
-			"reservation": "2025-10-14"
-		},
-		{
-			"name": "FlixBus",
-			"type": "Autobus",
-			"reservation": "2025-10-25"
-		}
+	"vehicle": [
+		{ "id": 1, "mark": "Toyota", "model": "Corolla", "destiny": "car" },
+		{ "id": 2, "mark": "Ford", "model": "Transit", "destiny": "van" },
+		{ "id": 3, "mark": "Volkswagen", "model": "Crafter", "destiny": "truck" },
+		{ "id": 4, "mark": "Mercedes", "model": "Sprinter", "destiny": "bus" },
+		{ "id": 5, "mark": "Renault", "model": "Kangoo", "destiny": "car" }
+	],
+	"employee": [
+		{ "id": 1, "name": "Anna", "surname": "Kowalska", "pesel": "90010112345", "date_of_birth": "1990-01-01" },
+		{ "id": 2, "name": "Jan", "surname": "Nowak", "pesel": "85031254321", "date_of_birth": "1985-03-12" },
+		{ "id": 3, "name": "Katarzyna", "surname": "Wiśniewska", "pesel": "92060567890", "date_of_birth": "1992-06-05" },
+		{ "id": 4, "name": "Piotr", "surname": "Zieliński", "pesel": "88071523456", "date_of_birth": "1988-07-15" },
+		{ "id": 5, "name": "Tomasz", "surname": "Lewandowski", "pesel": "87041298765", "date_of_birth": "1987-04-12" },
+		{ "id": 6, "name": "Agnieszka", "surname": "Wójcik", "pesel": "91092234567", "date_of_birth": "1991-09-22" },
+		{ "id": 7, "name": "Marek", "surname": "Kamiński", "pesel": "86010145678", "date_of_birth": "1986-01-01" },
+		{ "id": 8, "name": "Ewa", "surname": "Kaczmarek", "pesel": "93020198765", "date_of_birth": "1993-02-01" },
+		{ "id": 9, "name": "Paweł", "surname": "Mazur", "pesel": "89061934567", "date_of_birth": "1989-06-19" },
+		{ "id": 10, "name": "Magdalena", "surname": "Pawlak", "pesel": "95031065432", "date_of_birth": "1995-03-10" }
+	],
+	"reservation": [
+		{ "id": 1, "vehicle_id": 3, "employee_id": 5, "reservation_date": "2025-09-10", "return_date": "2025-09-15" },
+		{ "id": 2, "vehicle_id": 1, "employee_id": 2, "reservation_date": "2025-08-01", "return_date": "2025-08-05" },
+		{ "id": 3, "vehicle_id": 4, "employee_id": 7, "reservation_date": "2025-07-20", "return_date": "2025-07-25" },
+		{ "id": 4, "vehicle_id": 2, "employee_id": 3, "reservation_date": "2025-09-01", "return_date": "2025-09-03" },
+		{ "id": 5, "vehicle_id": 5, "employee_id": 6, "reservation_date": "2025-10-01", "return_date": "2025-10-05" },
+		{ "id": 6, "vehicle_id": 1, "employee_id": 4, "reservation_date": "2025-08-15", "return_date": "2025-08-20" },
+		{ "id": 7, "vehicle_id": 3, "employee_id": 1, "reservation_date": "2025-06-12", "return_date": "2025-06-18" },
+		{ "id": 8, "vehicle_id": 4, "employee_id": 8, "reservation_date": "2025-05-10", "return_date": "2025-05-15" },
+		{ "id": 9, "vehicle_id": 2, "employee_id": 9, "reservation_date": "2025-04-01", "return_date": "2025-04-07" },
+		{ "id": 10, "vehicle_id": 5, "employee_id": 10, "reservation_date": "2025-03-21", "return_date": "2025-03-25" }
 	]
 }

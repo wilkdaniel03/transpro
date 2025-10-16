@@ -7,4 +7,4 @@ class Transport:
     id: int
     name: str
     type: str
-    reservation: date
+    reservation: str
