@@ -53,7 +53,7 @@ const DashboardPage = () => {
 		<>
 			<Heading>Panel Administracyjny</Heading>
 			<chakra.Box w="33%">
-				<Card dotColor="green.500" title="Ilość transportów" content={transportData.length}/>
+				<Card dotColor={transportData.length > 0 ? "green.500" : "red.500"} title="Ilość transportów" content={transportData.length}/>
 			</chakra.Box>
 			{status != FetchStatus.Failed ? (
 				<chakra.TableRoot size="md">
