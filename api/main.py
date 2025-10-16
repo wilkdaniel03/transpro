@@ -1,20 +1,16 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware import cors
-import os
 import json
 from datetime import date
 from typing import Dict, Any
 from model.transport import transport_table_factory
 from sqlalchemy import create_engine, Table, MetaData, Connection, select, insert
 from dataclasses import dataclass
+from config import Config
 
 
-DB_PORT = os.environ.get("LW2_DB_PORT")
-DB_USER = os.environ.get("LW2_DB_USER")
-DB_PASSWORD = os.environ.get("LW2_DB_PASSWORD")
-DB_NAME = os.environ.get("LW2_DB_NAME")
-MODE = os.environ.get("LW2_API_MODE")
+cfg = Config()
 
 app = FastAPI()
 
@@ -29,7 +25,7 @@ app.add_middleware(
 metadata = MetaData()
 TransportTable = transport_table_factory(metadata)
 engine = create_engine(
-    "mysql+pymysql://{}:{}@127.0.0.1:{}/{}".format(DB_USER,DB_PASSWORD,DB_PORT,DB_NAME))
+    "mysql+pymysql://{}:{}@127.0.0.1:{}/{}".format(cfg.db.user,cfg.db.password,cfg.db.port,cfg.db.name))
 conn = engine.connect()
 
 
@@ -64,11 +60,9 @@ def load_transport_data() -> Dict[str,Any]:
 
 
 if __name__ == "__main__":
-    if any([DB_PORT == None,DB_USER == None,DB_PASSWORD == None,DB_NAME == None]):
-        raise ValueError("Failed to load env variables necessary for database connection")
-    should_reload = MODE != "PROD"
+    should_reload = cfg.mode != "PROD"
     transport_data = load_transport_data()
-    if not MODE == "PROD":
+    if cfg.mode == "PROD":
         metadata.drop_all(engine)
         metadata.create_all(engine)
         conn.execute(insert(TransportTable),transport_data)
