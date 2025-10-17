@@ -8,4 +8,4 @@ class Employee:
     name: str
     surname: str
     pesel: str
-    date_of_birth: date
+    date_of_birth: str
