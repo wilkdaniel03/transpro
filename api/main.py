@@ -50,7 +50,7 @@ def get_all_transports():
         EmployeeTable,ReservationTable.c.employee_id == EmployeeTable.c.id
     ).join(
         VehicleTable,ReservationTable.c.vehicle_id == VehicleTable.c.id
-    )
+    ).order_by(ReservationTable.c.id)
 
     data_raw = conn.execute(query).fetchall()
     data = [Transport(el[0],"{} {}".format(el[1],el[2]),el[3],"{} - {}".format(el[4],el[5])) for el in data_raw]
