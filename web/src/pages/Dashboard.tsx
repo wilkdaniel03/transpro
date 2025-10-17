@@ -1,21 +1,11 @@
 import { useContext } from 'react';
 import * as chakra from '@chakra-ui/react';
-import { Heading, Card } from '../components';
+import { Heading, Card, Table } from '../components';
 import { dataCtx } from '../DataContext';
-import { FetchStatus, type ITransport} from '../interfaces';
+import { FetchStatus } from '../interfaces';
 
 const DashboardPage = () => {
 	const data = useContext(dataCtx);
-
-	const renderRow = (data: ITransport) => {
-		return (
-			<chakra.TableRow key={data.id} _hover={{bg:"gray.100"}}>
-				<chakra.TableCell>{data.name}</chakra.TableCell>
-				<chakra.TableCell>{data.type}</chakra.TableCell>
-				<chakra.TableCell>{data.reservation}</chakra.TableCell>
-			</chakra.TableRow>
-		);
-	}
 
 	return (
 		<>
@@ -26,21 +16,8 @@ const DashboardPage = () => {
 					</chakra.Box>
 					<chakra.Button>New reservation</chakra.Button>
 				</chakra.Flex>
-			{data.status != FetchStatus.Failed ? (
-				<chakra.TableRoot size="md">
-					<chakra.TableHeader>
-						<chakra.TableRow>
-							<chakra.TableCell><chakra.Text fontWeight="bold">Nazwa</chakra.Text></chakra.TableCell>
-							<chakra.TableCell><chakra.Text fontWeight="bold">Typ</chakra.Text></chakra.TableCell>
-							<chakra.TableCell><chakra.Text fontWeight="bold">Rezerwacja</chakra.Text></chakra.TableCell>
-						</chakra.TableRow>
-					</chakra.TableHeader>
-					<chakra.TableBody>
-						{data.transport.map(obj => {
-							return renderRow(obj);
-						})}
-					</chakra.TableBody>
-				</chakra.TableRoot>
+			{data.status == FetchStatus.Success ? (
+				<Table data={data.transport}/>
 			) : (
 				<chakra.AlertRoot status="error">
 					<chakra.AlertIndicator/>

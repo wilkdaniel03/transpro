@@ -1,0 +1,34 @@
+import * as chakra from '@chakra-ui/react';
+
+const TableRow = (props: { data: Object }) => {
+	return (
+		<chakra.TableRow _hover={{bg:"gray.100"}}>
+			{Object.values(props.data).map((el,key) => {
+				return <chakra.TableCell key={key}>{el}</chakra.TableCell>;
+			})}
+		</chakra.TableRow>
+	);
+}
+
+const Table = (props: { data: Object[] }) => {
+	return (
+		<chakra.TableRoot size="md">
+			<chakra.TableHeader>
+				<chakra.TableRow>
+					{Object.keys(props.data[0]).map((el,key) => {
+						return (
+							<chakra.TableCell key={key}><chakra.Text fontWeight="bold">{el}</chakra.Text></chakra.TableCell>
+						);
+					})}
+				</chakra.TableRow>
+			</chakra.TableHeader>
+			<chakra.TableBody>
+				{props.data.map((el,key) => {
+					return <TableRow key={key} data={el}/>
+				})}
+			</chakra.TableBody>
+		</chakra.TableRoot>
+	);
+}
+
+export default Table;
