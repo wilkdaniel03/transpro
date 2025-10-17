@@ -5,6 +5,14 @@ export interface ITransport {
 	reservation: string;
 }
 
+export interface IEmployee {
+	id: number;
+	name: string;
+	surname: string;
+	pesel: string;
+	date_of_birth: string;
+}
+
 export enum FetchStatus {
 	Pending = 0,
 	Success = 1,
@@ -14,4 +22,5 @@ export enum FetchStatus {
 export interface IDataContext {
 	status: FetchStatus;
 	transport: ITransport[];
+	employee: IEmployee[];
 }
