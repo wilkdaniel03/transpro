@@ -13,6 +13,13 @@ export interface IEmployee {
 	date_of_birth: string;
 }
 
+export interface IVehicle {
+	id: number;
+	mark: string;
+	model: string;
+	destiny: string;
+}
+
 export enum FetchStatus {
 	Pending = 0,
 	Success = 1,
@@ -23,4 +30,5 @@ export interface IDataContext {
 	status: FetchStatus;
 	transport: ITransport[];
 	employee: IEmployee[];
+	vehicle: IVehicle[];
 }

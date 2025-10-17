@@ -1,7 +1,12 @@
 import { createContext, useState, useEffect, type ReactNode } from 'react';
 import { type IDataContext, FetchStatus } from './interfaces';
 
-const DEFAULT_DATACTX_VALUE: IDataContext = { status: FetchStatus.Pending, transport: [], employee: [] };
+const DEFAULT_DATACTX_VALUE: IDataContext = {
+	status: FetchStatus.Pending,
+	transport: [],
+	employee: [],
+	vehicle: []
+};
 
 export const dataCtx = createContext<IDataContext>(DEFAULT_DATACTX_VALUE);
 
@@ -24,11 +29,14 @@ const DataContext = (props: { children: ReactNode }) => {
 			}),
 			fetchData("/employee").then((res) => {
 				return res['data'];
+			}),
+			fetchData("/vehicle").then((res) => {
+				return res['data'];
 			})
-		]).then(([a,b]) => {
-			setData({status:FetchStatus.Success,transport:a,employee:b})
+		]).then(([a,b,c]) => {
+			setData({status:FetchStatus.Success,transport:a,employee:b,vehicle:c})
 		}).catch(_ => {
-			setData({status:FetchStatus.Failed,transport:[],employee:[]})
+			setData({status:FetchStatus.Failed,transport:[],employee:[],vehicle:[]})
 		});
 	},[]);
 
