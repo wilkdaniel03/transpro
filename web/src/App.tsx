@@ -2,6 +2,7 @@ import { ChakraProvider, defaultSystem } from '@chakra-ui/react';
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router';
 import { ContainerLayout } from './layouts';
 import { DashboardPage, NotificationsPage, ProfilePage } from './pages';
+import DataContext from './DataContext';
 
 const router = createBrowserRouter([
 	{ path: "/", element: <ContainerLayout/>, children: [
@@ -17,7 +18,9 @@ const router = createBrowserRouter([
 const App = () => {
 	return (
 		<ChakraProvider value={defaultSystem}>
-			<RouterProvider router={router}/>
+			<DataContext>
+				<RouterProvider router={router}/>
+			</DataContext>
 		</ChakraProvider>
 	);
 }

@@ -1,61 +1,32 @@
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import * as chakra from '@chakra-ui/react';
 import { Heading, Card } from '../components';
-
-interface ITransport {
-	id: number;
-	name: string;
-	type: string;
-	reservation: string;
-}
-
-enum FetchStatus {
-	Pending = 0,
-	Success = 1,
-	Failed = 2
-}
-
-const fetchTransports = async () => {
-	const headers = new Headers();
-	headers.append("Accept","application/json");
-	headers.append("Access-Control-Allow-Origin","*");
-	const res = await fetch("http://127.0.0.1:8081/transport",{method:"GET",headers:headers});
-	const data  = await res.json();
-	return data;
-}
+import { dataCtx } from '../DataContext';
+import { FetchStatus, type ITransport} from '../interfaces';
 
 const DashboardPage = () => {
-	let [status,setStatus] = useState<FetchStatus>(FetchStatus.Pending);
-	let [transportData,setTransportData] = useState<ITransport[]>([]);
-
-	useEffect(() => {
-		fetchTransports().then((res) => {
-			setTransportData(res['data']);
-			setStatus(FetchStatus.Success);
-		}).catch(_ => {
-			setStatus(FetchStatus.Failed);
-		});
-	},[]);
+	const data = useContext(dataCtx);
 
 	const renderRow = (data: ITransport) => {
-		if(status == FetchStatus.Success) {
-			return (
-				<chakra.TableRow key={data.id} _hover={{bg:"gray.100"}}>
-					<chakra.TableCell>{data.name}</chakra.TableCell>
-					<chakra.TableCell>{data.type}</chakra.TableCell>
-					<chakra.TableCell>{data.reservation}</chakra.TableCell>
-				</chakra.TableRow>
-			);
-		}
+		return (
+			<chakra.TableRow key={data.id} _hover={{bg:"gray.100"}}>
+				<chakra.TableCell>{data.name}</chakra.TableCell>
+				<chakra.TableCell>{data.type}</chakra.TableCell>
+				<chakra.TableCell>{data.reservation}</chakra.TableCell>
+			</chakra.TableRow>
+		);
 	}
 
 	return (
 		<>
 			<Heading>Panel Administracyjny</Heading>
-			<chakra.Box w="33%">
-				<Card dotColor={transportData.length > 0 ? "green.500" : "red.500"} title="Ilość transportów" content={transportData.length}/>
-			</chakra.Box>
-			{status != FetchStatus.Failed ? (
+				<chakra.Flex justifyContent="space-between" alignItems="start">
+					<chakra.Box w="33%">
+						<Card dotColor={data.transport.length > 0 ? "green.500" : "red.500"} title="Ilość transportów" content={data.transport.length}/>
+					</chakra.Box>
+					<chakra.Button>New reservation</chakra.Button>
+				</chakra.Flex>
+			{data.status != FetchStatus.Failed ? (
 				<chakra.TableRoot size="md">
 					<chakra.TableHeader>
 						<chakra.TableRow>
@@ -65,7 +36,7 @@ const DashboardPage = () => {
 						</chakra.TableRow>
 					</chakra.TableHeader>
 					<chakra.TableBody>
-						{transportData.map(obj => {
+						{data.transport.map(obj => {
 							return renderRow(obj);
 						})}
 					</chakra.TableBody>
