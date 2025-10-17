@@ -17,7 +17,22 @@ const DashboardPage = () => {
 					<chakra.Button>New reservation</chakra.Button>
 				</chakra.Flex>
 			{data.status == FetchStatus.Success ? (
-				<Table data={data.transport}/>
+				<chakra.TabsRoot defaultValue="reservations">
+					<chakra.TabsList>
+						<chakra.TabsTrigger value="reservations">Reservations</chakra.TabsTrigger>
+						<chakra.TabsTrigger value="employees">Employees</chakra.TabsTrigger>
+						<chakra.TabsTrigger value="vehicles">Vehicles</chakra.TabsTrigger>
+					</chakra.TabsList>
+					<chakra.TabsContent value="reservations">
+						<Table data={data.transport}/>
+					</chakra.TabsContent>
+					<chakra.TabsContent value="employees">
+						<Table data={data.employee}/>
+					</chakra.TabsContent>
+					<chakra.TabsContent value="vehicles">
+						<Table data={data.vehicle}/>
+					</chakra.TabsContent>
+				</chakra.TabsRoot>
 			) : (
 				<chakra.AlertRoot status="error">
 					<chakra.AlertIndicator/>
