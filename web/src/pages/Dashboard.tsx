@@ -3,15 +3,16 @@ import * as chakra from '@chakra-ui/react';
 import { Heading, Card, Table } from '../components';
 import { dataCtx } from '../DataContext';
 import { FetchStatus, type IDataContext } from '../interfaces';
+import { IoIosAddCircleOutline } from 'react-icons/io';
 
 const Content = (props: { data: IDataContext }) => {
 	if(props.data.status == FetchStatus.Success) {
 		return (
 			<chakra.TabsRoot defaultValue="reservations">
 				<chakra.TabsList>
-					<chakra.TabsTrigger value="reservations">Reservations</chakra.TabsTrigger>
-					<chakra.TabsTrigger value="employees">Employees</chakra.TabsTrigger>
-					<chakra.TabsTrigger value="vehicles">Vehicles</chakra.TabsTrigger>
+					<chakra.TabsTrigger value="reservations">Rezerwacje</chakra.TabsTrigger>
+					<chakra.TabsTrigger value="employees">Pracownicy</chakra.TabsTrigger>
+					<chakra.TabsTrigger value="vehicles">Pojazdy</chakra.TabsTrigger>
 				</chakra.TabsList>
 				<chakra.TabsContent value="reservations">
 					<Table data={props.data.transport}/>
@@ -46,7 +47,7 @@ const DashboardPage = () => {
 							<Card dotColor={data.vehicle.length > 0 ? "orange.500" : "red.500"} title="Ilość pojazdów" content={data.vehicle.length}/>
 						</chakra.Box>
 					</chakra.Flex>
-					<chakra.Button>New reservation</chakra.Button>
+					<chakra.Button paddingX="10px"><IoIosAddCircleOutline/><chakra.Text>New reservation</chakra.Text></chakra.Button>
 				</chakra.Flex>
 			{data.status != FetchStatus.Failed ? (
 				<Content data={data}/>
