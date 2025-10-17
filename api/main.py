@@ -6,7 +6,7 @@ from typing import Dict, Any
 import model
 from sqlalchemy import create_engine, Table, MetaData, Connection, select, insert
 from config import Config
-from dto.transport import Transport
+from dto import Transport, Employee
 
 
 cfg = Config()
@@ -33,6 +33,14 @@ conn = engine.connect()
 @app.get("/")
 def main():
     return {"status":"OK"}
+
+
+@app.get("/employee")
+def get_all_employees():
+    query = select(EmployeeTable)
+    data_raw = conn.execute(query).fetchall()
+    data = [Employee(*el) for el in data_raw]
+    return data
 
 
 @app.get("/transport")
