@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware import cors
 import json
 from typing import Dict, Any
@@ -40,6 +40,17 @@ def get_all_employees():
         query = select(EmployeeTable)
         data_raw = conn.execute(query).fetchall()
         data = [Employee(*el) for el in data_raw]
+        return { "data": data }
+
+
+@app.get("/employee/{id}")
+def get_one_employee(id: int):
+    with engine.connect() as conn:
+        query = select(EmployeeTable).where(EmployeeTable.c.id == id);
+        data_raw = conn.execute(query).fetchone()
+        if data_raw is None:
+            raise HTTPException(404,"Failed to find employee with id {}".format(id))
+        data = Employee(*data_raw)
         return { "data": data }
 
 
