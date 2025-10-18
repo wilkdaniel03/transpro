@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import * as chakra from '@chakra-ui/react';
+import { useNavigate } from 'react-router';
 import { Heading, Card, Table } from '../components';
 import { dataCtx } from '../DataContext';
 import { FetchStatus, type IDataContext } from '../interfaces';
@@ -31,6 +32,7 @@ const Content = (props: { data: IDataContext }) => {
 
 const DashboardPage = () => {
 	const data = useContext(dataCtx);
+	let navigate = useNavigate();
 
 	return (
 		<>
@@ -47,7 +49,7 @@ const DashboardPage = () => {
 							<Card dotColor={data.vehicle.length > 0 ? "orange.500" : "red.500"} title="Ilość pojazdów" content={data.vehicle.length}/>
 						</chakra.Box>
 					</chakra.Flex>
-					<chakra.Button paddingX="10px"><IoIosAddCircleOutline/><chakra.Text>Nowa rezerwacja</chakra.Text></chakra.Button>
+					<chakra.Button onClick={() => navigate("/dashboard/newreservation")} paddingX="10px"><IoIosAddCircleOutline/><chakra.Text>Nowa rezerwacja</chakra.Text></chakra.Button>
 				</chakra.Flex>
 			{data.status != FetchStatus.Failed ? (
 				<Content data={data}/>
