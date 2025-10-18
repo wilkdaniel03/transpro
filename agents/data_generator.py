@@ -1,4 +1,8 @@
 import openai
+import os
+
+
+TOKEN = os.environ.get("OPENAI_TOKEN")
 
 
 def main():
@@ -6,4 +10,6 @@ def main():
 
 
 if __name__ == "__main__":
+    if TOKEN is None:
+        raise ValueError("Failed to load OPENAI_TOKEN")
     main()
