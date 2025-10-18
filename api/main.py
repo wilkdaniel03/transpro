@@ -57,6 +57,8 @@ def get_one_employee(id: int):
 
 @app.post("/employee")
 def create_employee(data: EmployeeCreateInfo):
+    if not len(data.pesel) == 11 and all([(c >= '0' and c <= '9') for c in data.pesel]):
+        raise HTTPException(400,"pesel have to be 11 digits length")
     with engine.connect() as conn:
         query = insert(EmployeeTable)
         conn.execute(query,asdict(data))
