@@ -4,6 +4,8 @@ import os
 import sys
 import json
 from datetime import datetime
+from collections import ChainMap
+from typing import Dict
 
 
 TOKEN = os.environ.get("OPENAI_TOKEN")
@@ -16,22 +18,30 @@ def main():
     print("Hello from data generator!")
 
 
-def generate_employees(filename: str):
-    with open(filename,"w") as file:
-        print("prompting...")
-        res = client.responses.create(
-            model="gpt-4o",
-            input=[
-                { "role": "system", "content": "You are returning all data in a json format" },
-                { "role": "system", "content": "You are generating random users in format: { name: str, surname: str, pesel: str, date_of_birth: str}" },
-                { "role": "user", "content": "generate 100 users in rate: 70% polish and 30% ukrainian" }
-            ]
-        ).model_dump_json()
-        data = json.loads(res)['output'][0]['content'][0]['text']
-        data = str.splitlines(data)[1:-1]
-        data = ''.join(data)
-        data = json.loads(data)
-        json.dump(data,file,indent=4)
+def generate_employees():
+    res = client.responses.create(
+        model="gpt-4o",
+        input=[
+            { "role": "system", "content": "You are returning all data in a json format" },
+            { "role": "system", "content": "You are generating random users in format: { name: str, surname: str, pesel: str, date_of_birth: str}" },
+            { "role": "user", "content": "generate about a 100 users in rate: 70% polish and 30% ukrainian" }
+        ]
+    ).model_dump_json()
+    data = json.loads(res)['output'][0]['content'][0]['text']
+    data = str.splitlines(data)[1:-1]
+    data = ''.join(data)
+    data = json.loads(data)
+    return data
+
+
+def generate(filename: str):
+    print("prompting...")
+    total = []
+    for _ in range(10):
+        total.extend(generate_employees())
+    file = open(filename,"w")
+    print("generated {} employees".format(len(total)))
+    json.dump(total,file)
 
 
 def list_models():
@@ -49,8 +59,6 @@ def get_limits():
 if __name__ == "__main__":
     if TOKEN is None:
         raise ValueError("Failed to load OPENAI_TOKEN")
-    if PROJECT_ID is None:
-        raise ValueError("Failed to load OPENAI_PROJ_ID")
     if OUT_PATH is None:
         raise ValueError("Failed to load OUT_PATH")
     main()
@@ -59,4 +67,4 @@ if __name__ == "__main__":
     match sys.argv[1]:
         case "models": print(list_models())
         case "limits": print(get_limits())
-        case "gen": generate_employees(OUT_PATH)
+        case "gen": generate(OUT_PATH)

@@ -97,23 +97,32 @@ def get_all_transports():
 
 
 def load_transport_data() -> Dict[str,Any]:
-    data_as_str: str
-    with open("./data.json","r") as file:
-        lines = []
-        for l in file:
-            lines.append(l)
-        data_as_str = "".join(lines)
-    return json.loads(data_as_str)
+    file = open("./data.json","r")
+    return json.load(file)
+
+
+def load_employees() -> list[Dict[str,Any]]:
+    file = open("./employees.json","r")
+    return json.load(file)
 
 
 def init_db() -> None:
     data = load_transport_data()
+    employees = load_employees()
     metadata.drop_all(engine)
     metadata.create_all(engine)
     conn = engine.connect()
     conn.execute(insert(EmployeeTable),data['employee'])
     conn.execute(insert(VehicleTable),data['vehicle'])
     conn.execute(insert(ReservationTable),data['reservation'])
+    conn.commit()
+    for x in employees:
+        try:
+            conn.execute(insert(EmployeeTable),x)
+        except:
+            conn.rollback()
+        finally:
+            conn.commit()
     conn.commit()
     conn.close()
 
