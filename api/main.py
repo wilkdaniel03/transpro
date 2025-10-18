@@ -61,8 +61,12 @@ def create_employee(data: EmployeeCreateInfo):
         raise HTTPException(400,"pesel have to be 11 digits length")
     with engine.connect() as conn:
         query = insert(EmployeeTable)
-        conn.execute(query,asdict(data))
-        conn.commit()
+        try:
+            conn.execute(query,asdict(data))
+        except:
+            conn.rollback()
+        finally:
+            conn.commit()
         return { "status": "success" }
 
 
