@@ -109,12 +109,16 @@ def load_transport_data() -> Dict[str,Any]:
 
 def load_employees() -> list[Dict[str,Any]]:
     file = open("./employees.json","r")
-    return json.load(file)
+    data = json.load(file)
+    file.close()
+    return data
 
 
 def load_vehicles() -> list[Dict[str,Any]]:
     file = open("./vehicles.json","r")
-    return json.load(file)
+    data = json.load(file)
+    file.close()
+    return data
 
 
 def init_db() -> None:
