@@ -1,6 +1,6 @@
 from .transport import Transport
-from .employee import Employee
+from .employee import Employee, EmployeeCreateInfo
 from .vehicle import Vehicle
 
 
-__all__ = ["Transport","Employee","Vehicle"]
+__all__ = ["Transport","Employee","EmployeeCreateInfo","Vehicle"]

@@ -43,7 +43,7 @@ const DashboardPage = () => {
 							<Card dotColor={data.transport.length > 0 ? "green.500" : "red.500"} title="Ilość transportów" content={data.transport.length}/>
 						</chakra.Box>
 						<chakra.Box paddingLeft="10px" w="25%">
-							<Card dotColor={data.employee.length > 0 ? "blue.500" : "red.500"} title="Ilość pracowników" content={data.transport.length}/>
+							<Card dotColor={data.employee.length > 0 ? "blue.500" : "red.500"} title="Ilość pracowników" content={data.employee.length}/>
 						</chakra.Box>
 						<chakra.Box paddingLeft="10px" w="25%">
 							<Card dotColor={data.vehicle.length > 0 ? "orange.500" : "red.500"} title="Ilość pojazdów" content={data.vehicle.length}/>

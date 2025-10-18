@@ -6,7 +6,8 @@ from typing import Dict, Any
 import model
 from sqlalchemy import create_engine, Table, MetaData, Connection, select, insert
 from config import Config
-from dto import Transport, Employee, Vehicle
+from dto import Transport, Employee, EmployeeCreateInfo, Vehicle
+from dataclasses import asdict
 
 
 cfg = Config()
@@ -52,6 +53,15 @@ def get_one_employee(id: int):
             raise HTTPException(404,"Failed to find employee with id {}".format(id))
         data = Employee(*data_raw)
         return { "data": data }
+
+
+@app.post("/employee")
+def create_employee(data: EmployeeCreateInfo):
+    with engine.connect() as conn:
+        query = insert(EmployeeTable)
+        conn.execute(query,asdict(data))
+        conn.commit()
+        return { "status": "success" }
 
 
 @app.get("/vehicle")

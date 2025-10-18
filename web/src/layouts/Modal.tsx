@@ -1,6 +1,6 @@
 import * as chakra from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
-import { useLocation, useNavigate, Outlet } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 const Backdrop = (props: { onClick: (arg: boolean) => void}) => {
 	return (
