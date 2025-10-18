@@ -1,7 +1,7 @@
 import ContainerLayout from './Container';
-import Modal from './Modal';
+import ModalLayout from './Modal';
 
 export {
 	ContainerLayout,
-	Modal
+	ModalLayout
 };

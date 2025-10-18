@@ -47,7 +47,7 @@ const DashboardPage = () => {
 							<Card dotColor={data.vehicle.length > 0 ? "orange.500" : "red.500"} title="Ilość pojazdów" content={data.vehicle.length}/>
 						</chakra.Box>
 					</chakra.Flex>
-					<chakra.Button paddingX="10px"><IoIosAddCircleOutline/><chakra.Text>New reservation</chakra.Text></chakra.Button>
+					<chakra.Button paddingX="10px"><IoIosAddCircleOutline/><chakra.Text>Nowa rezerwacja</chakra.Text></chakra.Button>
 				</chakra.Flex>
 			{data.status != FetchStatus.Failed ? (
 				<Content data={data}/>

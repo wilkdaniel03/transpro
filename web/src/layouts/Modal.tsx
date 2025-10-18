@@ -1,5 +1,27 @@
-const Modal = () => {
-	return <></>;
+import * as chakra from '@chakra-ui/react';
+import { useState } from 'react';
+
+const Backdrop = (props: { onClick: (arg: boolean) => void}) => {
+	return (
+		<chakra.Box position="fixed" zIndex="3" bg="blackAlpha.600" w="100%" h="100%" onClick={() => props.onClick(false)}/>
+	);
 }
 
-export default Modal;
+const ModalLayout = () => {
+	const [isOpen,setIsOpen] = useState<boolean>(true);
+	return (
+		<>
+			{ isOpen ? (
+				<>
+					<Backdrop onClick={setIsOpen}/>
+					<chakra.Box position="fixed" zIndex="4" bg="gray.100" borderWidth="1px" borderColor="gray.200" borderRadius="10px" shadow="md" top="50%" left="50%" w="40%" h="60%" translate="auto" translateX="-50%" translateY="-50%">
+					</chakra.Box>
+				</>
+			) : (
+				<></>
+			)}
+		</>
+	);
+}
+
+export default ModalLayout;
