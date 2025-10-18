@@ -106,9 +106,15 @@ def load_employees() -> list[Dict[str,Any]]:
     return json.load(file)
 
 
+def load_vehicles() -> list[Dict[str,Any]]:
+    file = open("./vehicles.json","r")
+    return json.load(file)
+
+
 def init_db() -> None:
     data = load_transport_data()
     employees = load_employees()
+    vehicles = load_vehicles()
     metadata.drop_all(engine)
     metadata.create_all(engine)
     conn = engine.connect()
@@ -116,14 +122,23 @@ def init_db() -> None:
     conn.execute(insert(VehicleTable),data['vehicle'])
     conn.execute(insert(ReservationTable),data['reservation'])
     conn.commit()
-    for x in employees:
+
+    for emp in employees:
         try:
-            conn.execute(insert(EmployeeTable),x)
+            conn.execute(insert(EmployeeTable),emp)
         except:
             conn.rollback()
         finally:
             conn.commit()
-    conn.commit()
+
+    for veh in vehicles:
+        try:
+            conn.execute(insert(VehicleTable),veh)
+        except:
+            conn.rollback()
+        finally:
+            conn.commit()
+
     conn.close()
 
 
