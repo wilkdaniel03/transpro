@@ -34,13 +34,52 @@ def generate_employees():
     return data
 
 
-def generate(filename: str):
+def generate_lots_employees(filename: str):
     print("prompting...")
     total = []
     for _ in range(10):
-        total.extend(generate_employees())
+        generated: list[Dict] = []
+        try:
+            generated = generate_employees()
+        except:
+            pass
+        finally:
+            total.extend(generated)
     file = open(filename,"w")
     print("generated {} employees".format(len(total)))
+    json.dump(total,file)
+
+
+def generate_vehicles():
+    res = client.responses.create(
+        model="gpt-4o",
+        input=[
+            { "role": "system", "content": "You are returning all data in a json format" },
+            { "role": "system", "content": "You are generating random vehicles in format: { mark: str, model: str, destiny: str}. Destiny can be one of: car,van,truck,bus" },
+            { "role": "system", "content": "Mark can be any existent vehicles mark in the world and model can be any model of its mark"},
+            { "role": "user", "content": "generate about a 100 vehicles" }
+        ]
+    ).model_dump_json()
+    data = json.loads(res)['output'][0]['content'][0]['text']
+    data = str.splitlines(data)[1:-1]
+    data = ''.join(data)
+    data = json.loads(data)
+    return data
+
+
+def generate_lots_vehicles(filename: str):
+    print("prompting...")
+    total = []
+    for _ in range(10):
+        generated: list[Dict] = []
+        try:
+            generated = generate_vehicles()
+        except:
+            pass
+        finally:
+            total.extend(generated)
+    file = open(filename,"w")
+    print("generated {} vehicles".format(len(total)))
     json.dump(total,file)
 
 
@@ -67,4 +106,5 @@ if __name__ == "__main__":
     match sys.argv[1]:
         case "models": print(list_models())
         case "limits": print(get_limits())
-        case "gen": generate(OUT_PATH)
+        case "genemp": generate_lots_employees(OUT_PATH)
+        case "genveh": generate_lots_vehicles(OUT_PATH)
