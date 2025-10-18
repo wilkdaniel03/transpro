@@ -4,12 +4,10 @@ import { ContainerLayout } from './layouts';
 import { DashboardPage, NotificationsPage, ProfilePage } from './pages';
 import DataContext from './DataContext';
 
-const Hey = () => { return <h1>Hey</h1>; }
-
 const router = createBrowserRouter([
 	{ path: "/", element: <ContainerLayout/>, children: [
 		{ path: "/dashboard", element: <DashboardPage/>, children: [
-			{ path: "/dashboard/newreservation", element: <Hey/> }
+			{ path: "/dashboard/newreservation" }
 		] },
 		{ path: "/notifications", element: <NotificationsPage/> },
 		{ path: "/profile", element: <ProfilePage/> },

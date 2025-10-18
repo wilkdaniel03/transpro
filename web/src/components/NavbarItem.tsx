@@ -3,7 +3,7 @@ import { NavLink, useLocation } from 'react-router';
 
 const NavbarItem = (props: { content: string, linkPath: string }) => {
 	let location = useLocation();
-	let isActive = location.pathname == props.linkPath;
+	let isActive = location.pathname.startsWith(props.linkPath);
 	let btnBackground = isActive == true ? "yellow.500" : "none";
 
 	return (

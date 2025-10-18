@@ -4,7 +4,7 @@ import { useLocation, useNavigate, Outlet } from 'react-router';
 
 const Backdrop = (props: { onClick: (arg: boolean) => void}) => {
 	return (
-		<chakra.Box position="fixed" zIndex="3" bg="blackAlpha.600" w="100%" h="100%" onClick={() => props.onClick(false)}/>
+		<chakra.Box position="fixed" zIndex="3" backdropFilter="initial" backdropBlur="20px" bg="blackAlpha.600" w="100%" h="100%" onClick={() => props.onClick(false)}/>
 	);
 }
 
