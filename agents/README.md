@@ -8,6 +8,7 @@ uv
 
 ### Environment variables needed 
 * OPENAI_TOKEN
+* OUT_PATH
 
 ### Setup
 ```bash

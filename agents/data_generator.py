@@ -6,8 +6,7 @@ import json
 from datetime import datetime
 
 
-TOKEN = os.environ.get("OPENAI_TOKEN_OLD")
-PROJECT_ID = os.environ.get("OPENAI_PROJ_ID")
+TOKEN = os.environ.get("OPENAI_TOKEN")
 OUT_PATH = os.environ.get("OUT_PATH")
 
 client = OpenAI(api_key=TOKEN)
