@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { Heading, Card, Table } from '../components';
 import { dataCtx } from '../DataContext';
 import { FetchStatus, type IDataContext } from '../interfaces';
+import { FaChevronUp } from "react-icons/fa";
 import { IoIosAddCircleOutline } from 'react-icons/io';
 import { useEmployeeStore, useVehicleStore, useTransportStore, usePaginationStore } from '../stores';
 
@@ -31,7 +32,7 @@ const Content = (props: { data: IDataContext }) => {
 					<Table data={vehicleStore.items}/>
 				</chakra.TabsContent>
 				<chakra.NativeSelectRoot 
-					width="200px"
+					width="100px"
 					marginTop="15px"
 					onChange={(e: any) => paginationStore.setPageSize(parseInt(e.target.value))}
 				>
@@ -45,6 +46,7 @@ const Content = (props: { data: IDataContext }) => {
 						<option value="500">500</option>
 						<option value="1000">1000</option>
 					</chakra.NativeSelectField>
+					<chakra.NativeSelectIndicator/>
 				</chakra.NativeSelectRoot>
 			</chakra.TabsRoot>
 		);
