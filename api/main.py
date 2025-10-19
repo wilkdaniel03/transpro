@@ -56,7 +56,7 @@ def get_employees_count():
 def get_employees_in_range(lower: int, upper: int):
     with engine.connect() as conn:
         q1 = select(EmployeeTable).limit(upper).alias("A")
-        q2 = select(q1).order_by(q1.c.id.desc()).limit(lower).alias("B")
+        q2 = select(q1).order_by(q1.c.id.desc()).limit(upper-lower + 1).alias("B")
         q3 = select(q2).order_by(q2.c.id)
         data_raw = conn.execute(q3).fetchall()
         data = [Employee(*el) for el in data_raw]
@@ -110,7 +110,7 @@ def get_vehicles_count():
 def get_vehicles_in_range(lower: int, upper: int):
     with engine.connect() as conn:
         q1 = select(VehicleTable).limit(upper).alias("A")
-        q2 = select(q1).order_by(q1.c.id.desc()).limit(lower).alias("B")
+        q2 = select(q1).order_by(q1.c.id.desc()).limit(upper-lower + 1).alias("B")
         q3 = select(q2).order_by(q2.c.id)
         data_raw = conn.execute(q3).fetchall()
         data = [Vehicle(*el) for el in data_raw]
@@ -165,7 +165,7 @@ def get_reservations_in_range(lower: int, upper: int):
         ).join(
             VehicleTable,ReservationTable.c.vehicle_id == VehicleTable.c.id
         ).order_by(ReservationTable.c.id).limit(upper).alias("A")
-        q2 = select(q1).order_by(q1.c.id.desc()).limit(lower).alias("B")
+        q2 = select(q1).order_by(q1.c.id.desc()).limit(upper-lower + 1).alias("B")
         q3 = select(q2).order_by(q2.c.id)
         data_raw = conn.execute(q3).fetchall()
         data = [Transport(el[0],"{} {}".format(el[1],el[2]),el[3],"{} - {}".format(el[4],el[5])) for el in data_raw]
