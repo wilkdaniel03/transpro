@@ -26,6 +26,13 @@ export enum FetchStatus {
 	Failed = 2
 }
 
+export interface IEmployeeStore {
+	count: number;
+	items: IEmployee[];
+	setCount: (data: number) => void;
+	update: (data: IEmployee[]) => void;
+}
+
 export interface IDataContext {
 	status: FetchStatus;
 	transport: ITransport[];

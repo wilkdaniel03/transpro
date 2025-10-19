@@ -11,24 +11,28 @@ const TableRow = (props: { data: Object }) => {
 }
 
 const Table = (props: { data: Object[] }) => {
-	return (
-		<chakra.TableRoot size="md">
-			<chakra.TableHeader>
-				<chakra.TableRow>
-					{Object.keys(props.data[0]).map((el,key) => {
-						return (
-							<chakra.TableCell key={key}><chakra.Text fontWeight="bold">{el}</chakra.Text></chakra.TableCell>
-						);
+	if(props.data.length > 0) {
+		return (
+			<chakra.TableRoot size="md">
+				<chakra.TableHeader>
+					<chakra.TableRow>
+						{Object.keys(props.data[0]).map((el,key) => {
+							return (
+								<chakra.TableCell key={key}><chakra.Text fontWeight="bold">{el}</chakra.Text></chakra.TableCell>
+							);
+						})}
+					</chakra.TableRow>
+				</chakra.TableHeader>
+				<chakra.TableBody>
+					{props.data.map((el,key) => {
+						return <TableRow key={key} data={el}/>
 					})}
-				</chakra.TableRow>
-			</chakra.TableHeader>
-			<chakra.TableBody>
-				{props.data.map((el,key) => {
-					return <TableRow key={key} data={el}/>
-				})}
-			</chakra.TableBody>
-		</chakra.TableRoot>
-	);
+				</chakra.TableBody>
+			</chakra.TableRoot>
+		);
+	}
+
+	return <></>;
 }
 
 export default Table;

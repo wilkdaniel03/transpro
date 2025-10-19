@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect, type ReactNode } from 'react';
 import { type IDataContext, FetchStatus } from './interfaces';
+import { useEmployeeStore } from './stores';
 
 const DEFAULT_DATACTX_VALUE: IDataContext = {
 	status: FetchStatus.Pending,
@@ -21,6 +22,7 @@ const fetchData = async (path: string) => {
 
 const DataContext = (props: { children: ReactNode }) => {
 	const [data,setData] = useState<IDataContext>(DEFAULT_DATACTX_VALUE);
+	const employeesStore = useEmployeeStore();
 
 	useEffect(() => {
 		Promise.all([
@@ -38,6 +40,12 @@ const DataContext = (props: { children: ReactNode }) => {
 		}).catch(_ => {
 			setData({status:FetchStatus.Failed,transport:[],employee:[],vehicle:[]})
 		});
+
+		fetchData("/employee/count").then((res) => {
+			employeesStore.setCount(res['data']);
+		}).catch((err) => {
+			console.log(`Failed to fetch: ${err}`);
+		})
 	},[]);
 
 	return <dataCtx.Provider value={data}>{props.children}</dataCtx.Provider>;

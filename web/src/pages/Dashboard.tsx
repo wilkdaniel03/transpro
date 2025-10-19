@@ -5,8 +5,11 @@ import { Heading, Card, Table } from '../components';
 import { dataCtx } from '../DataContext';
 import { FetchStatus, type IDataContext } from '../interfaces';
 import { IoIosAddCircleOutline } from 'react-icons/io';
+import { useEmployeeStore } from '../stores';
 
 const Content = (props: { data: IDataContext }) => {
+	const employeeStore = useEmployeeStore();
+
 	if(props.data.status == FetchStatus.Success) {
 		return (
 			<chakra.TabsRoot defaultValue="reservations">
@@ -19,7 +22,7 @@ const Content = (props: { data: IDataContext }) => {
 					<Table data={props.data.transport}/>
 				</chakra.TabsContent>
 				<chakra.TabsContent value="employees">
-					<Table data={props.data.employee}/>
+					<Table data={employeeStore.items}/>
 				</chakra.TabsContent>
 				<chakra.TabsContent value="vehicles">
 					<Table data={props.data.vehicle}/>
@@ -33,6 +36,7 @@ const Content = (props: { data: IDataContext }) => {
 const DashboardPage = () => {
 	const data = useContext(dataCtx);
 	let navigate = useNavigate();
+	const employeeStore = useEmployeeStore();
 
 	return (
 		<>
@@ -43,7 +47,7 @@ const DashboardPage = () => {
 							<Card dotColor={data.transport.length > 0 ? "green.500" : "red.500"} title="Ilość transportów" content={data.transport.length}/>
 						</chakra.Box>
 						<chakra.Box paddingLeft="10px" w="25%">
-							<Card dotColor={data.employee.length > 0 ? "blue.500" : "red.500"} title="Ilość pracowników" content={data.employee.length}/>
+							<Card dotColor={employeeStore.count > 0 ? "blue.500" : "red.500"} title="Ilość pracowników" content={data.employee.length}/>
 						</chakra.Box>
 						<chakra.Box paddingLeft="10px" w="25%">
 							<Card dotColor={data.vehicle.length > 0 ? "orange.500" : "red.500"} title="Ilość pojazdów" content={data.vehicle.length}/>
