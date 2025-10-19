@@ -37,8 +37,11 @@ const DataContext = (props: { children: ReactNode }) => {
 			fetchData("/vehicle/range/0-10").then((res) => {
 				return res['data'];
 			})
-		]).then(([a,b,c]) => {
-			setData({status:FetchStatus.Success,transport:a,employee:b,vehicle:c})
+		]).then(([emp,veh,tran]) => {
+			employeesStore.update(emp);
+			vehicleStore.update(veh);
+			transportStore.update(tran);
+			setData({status:FetchStatus.Success,transport:[],employee:[],vehicle:[]})
 		}).catch(_ => {
 			setData({status:FetchStatus.Failed,transport:[],employee:[],vehicle:[]})
 		});

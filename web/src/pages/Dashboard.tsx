@@ -9,6 +9,8 @@ import { useEmployeeStore, useVehicleStore, useTransportStore } from '../stores'
 
 const Content = (props: { data: IDataContext }) => {
 	const employeeStore = useEmployeeStore();
+	const vehicleStore = useVehicleStore();
+	const transportStore = useTransportStore();
 
 	if(props.data.status == FetchStatus.Success) {
 		return (
@@ -19,13 +21,13 @@ const Content = (props: { data: IDataContext }) => {
 					<chakra.TabsTrigger value="vehicles">Pojazdy</chakra.TabsTrigger>
 				</chakra.TabsList>
 				<chakra.TabsContent value="reservations">
-					<Table data={props.data.transport}/>
+					<Table data={transportStore.items}/>
 				</chakra.TabsContent>
 				<chakra.TabsContent value="employees">
-					<Table data={props.data.employee}/>
+					<Table data={employeeStore.items}/>
 				</chakra.TabsContent>
 				<chakra.TabsContent value="vehicles">
-					<Table data={props.data.vehicle}/>
+					<Table data={vehicleStore.items}/>
 				</chakra.TabsContent>
 			</chakra.TabsRoot>
 		);
