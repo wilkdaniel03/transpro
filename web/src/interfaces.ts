@@ -33,6 +33,20 @@ export interface IEmployeeStore {
 	update: (data: IEmployee[]) => void;
 }
 
+export interface IVehicleStore {
+	count: number;
+	items: IVehicle[];
+	setCount: (data: number) => void;
+	update: (data: IVehicle[]) => void;
+}
+
+export interface ITransportStore {
+	count: number;
+	items: ITransport[];
+	setCount: (data: number) => void;
+	update: (data: ITransport[]) => void;
+}
+
 export interface IDataContext {
 	status: FetchStatus;
 	transport: ITransport[];
