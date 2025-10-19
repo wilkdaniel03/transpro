@@ -5,12 +5,13 @@ import { Heading, Card, Table } from '../components';
 import { dataCtx } from '../DataContext';
 import { FetchStatus, type IDataContext } from '../interfaces';
 import { IoIosAddCircleOutline } from 'react-icons/io';
-import { useEmployeeStore, useVehicleStore, useTransportStore } from '../stores';
+import { useEmployeeStore, useVehicleStore, useTransportStore, usePaginationStore } from '../stores';
 
 const Content = (props: { data: IDataContext }) => {
 	const employeeStore = useEmployeeStore();
 	const vehicleStore = useVehicleStore();
 	const transportStore = useTransportStore();
+	const paginationStore = usePaginationStore();
 
 	if(props.data.status == FetchStatus.Success) {
 		return (
@@ -29,6 +30,22 @@ const Content = (props: { data: IDataContext }) => {
 				<chakra.TabsContent value="vehicles">
 					<Table data={vehicleStore.items}/>
 				</chakra.TabsContent>
+				<chakra.NativeSelectRoot 
+					width="200px"
+					marginTop="15px"
+					onChange={(e: any) => paginationStore.setPageSize(parseInt(e.target.value))}
+				>
+					<chakra.NativeSelectField>
+						<option value="5">5</option>
+						<option value="10">10</option>
+						<option value="20">20</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+						<option value="200">200</option>
+						<option value="500">500</option>
+						<option value="1000">1000</option>
+					</chakra.NativeSelectField>
+				</chakra.NativeSelectRoot>
 			</chakra.TabsRoot>
 		);
 	}
@@ -48,7 +65,7 @@ const DashboardPage = () => {
 				<chakra.Flex paddingY="10px" justifyContent="space-between" alignItems="start">
 					<chakra.Flex w="100%" justifyContent="start" alignItems="center">
 						<chakra.Box w="25%">
-							<Card dotColor={transportStore.count > 0 ? "green.500" : "red.500"} title="Ilość transportów" content={transportStore.count}/>
+							<Card dotColor={transportStore.count > 0 ? "green.500" : "red.500"} title="Ilość rezerwacji" content={transportStore.count}/>
 						</chakra.Box>
 						<chakra.Box paddingLeft="10px" w="25%">
 							<Card dotColor={employeeStore.count > 0 ? "blue.500" : "red.500"} title="Ilość pracowników" content={employeeStore.count}/>

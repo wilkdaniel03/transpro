@@ -47,6 +47,11 @@ export interface ITransportStore {
 	update: (data: ITransport[]) => void;
 }
 
+export interface IPaginationStore {
+	pageSize: number;
+	setPageSize: (data: number) => void;
+}
+
 export interface IDataContext {
 	status: FetchStatus;
 	transport: ITransport[];

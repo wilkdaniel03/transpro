@@ -1,6 +1,11 @@
 import { createContext, useState, useEffect, type ReactNode } from 'react';
 import { type IDataContext, FetchStatus } from './interfaces';
-import { useEmployeeStore, useVehicleStore, useTransportStore } from './stores';
+import { 
+	useEmployeeStore,
+	useVehicleStore,
+	useTransportStore,
+	usePaginationStore
+} from './stores';
 
 const DEFAULT_DATACTX_VALUE: IDataContext = {
 	status: FetchStatus.Pending,
@@ -25,16 +30,17 @@ const DataContext = (props: { children: ReactNode }) => {
 	const employeesStore = useEmployeeStore();
 	const vehicleStore = useVehicleStore();
 	const transportStore = useTransportStore();
+	const paginationStore = usePaginationStore();
 
 	useEffect(() => {
 		Promise.all([
-			fetchData("/employee/range/0-10").then((res) => {
+			fetchData(`/employee/range/0-${paginationStore.pageSize}`).then((res) => {
 				return res['data'];
 			}),
-			fetchData("/vehicle/range/0-10").then((res) => {
+			fetchData(`/vehicle/range/0-${paginationStore.pageSize}`).then((res) => {
 				return res['data'];
 			}),
-			fetchData("/reservation/range/0-10").then((res) => {
+			fetchData(`/reservation/range/0-${paginationStore.pageSize}`).then((res) => {
 				return res['data'];
 			})
 		]).then(([emp,veh,tran]) => {
@@ -61,7 +67,7 @@ const DataContext = (props: { children: ReactNode }) => {
 			vehicleStore.setCount(veh);
 			transportStore.setCount(tran);
 		});
-	},[]);
+	},[paginationStore.pageSize]);
 
 	return <dataCtx.Provider value={data}>{props.children}</dataCtx.Provider>;
 }
