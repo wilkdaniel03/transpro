@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, type ReactNode } from 'react';
 import { type IDataContext, FetchStatus } from './interfaces';
-import { useEmployeeStore } from './stores';
+import { useEmployeeStore, useVehicleStore, useTransportStore } from './stores';
 
 const DEFAULT_DATACTX_VALUE: IDataContext = {
 	status: FetchStatus.Pending,
@@ -23,16 +23,18 @@ const fetchData = async (path: string) => {
 const DataContext = (props: { children: ReactNode }) => {
 	const [data,setData] = useState<IDataContext>(DEFAULT_DATACTX_VALUE);
 	const employeesStore = useEmployeeStore();
+	const vehicleStore = useVehicleStore();
+	const transportStore = useTransportStore();
 
 	useEffect(() => {
 		Promise.all([
-			fetchData("/reservation").then((res) => {
+			fetchData("/reservation/range/0-10").then((res) => {
 				return res['data'];
 			}),
-			fetchData("/employee").then((res) => {
+			fetchData("/employee/range/0-10").then((res) => {
 				return res['data'];
 			}),
-			fetchData("/vehicle").then((res) => {
+			fetchData("/vehicle/range/0-10").then((res) => {
 				return res['data'];
 			})
 		]).then(([a,b,c]) => {
@@ -41,11 +43,21 @@ const DataContext = (props: { children: ReactNode }) => {
 			setData({status:FetchStatus.Failed,transport:[],employee:[],vehicle:[]})
 		});
 
-		fetchData("/employee/count").then((res) => {
-			employeesStore.setCount(res['data']);
-		}).catch((err) => {
-			console.log(`Failed to fetch: ${err}`);
-		})
+		Promise.all([
+			fetchData("/employee/count").then((res) => {
+				return res['data'];
+			}),
+			fetchData("/vehicle/count").then((res) => {
+				return res['data'];
+			}),
+			fetchData("/reservation/count").then((res) => {
+				return res['data'];
+			})
+		]).then(([emp,veh,tran]) => {
+			employeesStore.setCount(emp);
+			vehicleStore.setCount(veh);
+			transportStore.setCount(tran);
+		});
 	},[]);
 
 	return <dataCtx.Provider value={data}>{props.children}</dataCtx.Provider>;

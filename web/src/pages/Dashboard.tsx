@@ -5,7 +5,7 @@ import { Heading, Card, Table } from '../components';
 import { dataCtx } from '../DataContext';
 import { FetchStatus, type IDataContext } from '../interfaces';
 import { IoIosAddCircleOutline } from 'react-icons/io';
-import { useEmployeeStore } from '../stores';
+import { useEmployeeStore, useVehicleStore, useTransportStore } from '../stores';
 
 const Content = (props: { data: IDataContext }) => {
 	const employeeStore = useEmployeeStore();
@@ -22,7 +22,7 @@ const Content = (props: { data: IDataContext }) => {
 					<Table data={props.data.transport}/>
 				</chakra.TabsContent>
 				<chakra.TabsContent value="employees">
-					<Table data={employeeStore.items}/>
+					<Table data={props.data.employee}/>
 				</chakra.TabsContent>
 				<chakra.TabsContent value="vehicles">
 					<Table data={props.data.vehicle}/>
@@ -37,6 +37,8 @@ const DashboardPage = () => {
 	const data = useContext(dataCtx);
 	let navigate = useNavigate();
 	const employeeStore = useEmployeeStore();
+	const vehicleStore = useVehicleStore();
+	const transportStore = useTransportStore();
 
 	return (
 		<>
@@ -44,13 +46,13 @@ const DashboardPage = () => {
 				<chakra.Flex paddingY="10px" justifyContent="space-between" alignItems="start">
 					<chakra.Flex w="100%" justifyContent="start" alignItems="center">
 						<chakra.Box w="25%">
-							<Card dotColor={data.transport.length > 0 ? "green.500" : "red.500"} title="Ilość transportów" content={data.transport.length}/>
+							<Card dotColor={transportStore.count > 0 ? "green.500" : "red.500"} title="Ilość transportów" content={transportStore.count}/>
 						</chakra.Box>
 						<chakra.Box paddingLeft="10px" w="25%">
-							<Card dotColor={employeeStore.count > 0 ? "blue.500" : "red.500"} title="Ilość pracowników" content={data.employee.length}/>
+							<Card dotColor={employeeStore.count > 0 ? "blue.500" : "red.500"} title="Ilość pracowników" content={employeeStore.count}/>
 						</chakra.Box>
 						<chakra.Box paddingLeft="10px" w="25%">
-							<Card dotColor={data.vehicle.length > 0 ? "orange.500" : "red.500"} title="Ilość pojazdów" content={data.vehicle.length}/>
+							<Card dotColor={vehicleStore.count > 0 ? "orange.500" : "red.500"} title="Ilość pojazdów" content={vehicleStore.count}/>
 						</chakra.Box>
 					</chakra.Flex>
 					<chakra.Button onClick={() => navigate("/dashboard/newreservation")} paddingX="10px"><IoIosAddCircleOutline/><chakra.Text>Nowa rezerwacja</chakra.Text></chakra.Button>
