@@ -24,7 +24,7 @@ const DataContext = (props: { children: ReactNode }) => {
 
 	useEffect(() => {
 		Promise.all([
-			fetchData("/transport").then((res) => {
+			fetchData("/reservation").then((res) => {
 				return res['data'];
 			}),
 			fetchData("/employee").then((res) => {
