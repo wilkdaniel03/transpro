@@ -4,7 +4,7 @@ from fastapi.middleware import cors
 import json
 from typing import Dict, Any
 import model
-from sqlalchemy import create_engine, Table, MetaData, Connection, select, insert
+from sqlalchemy import create_engine, Table, MetaData, Connection, select, insert, func
 from config import Config
 from dto import Transport, Employee, EmployeeCreateInfo, Vehicle
 from dataclasses import asdict
@@ -44,6 +44,14 @@ def get_all_employees():
         return { "data": data }
 
 
+@app.get("/employee/count")
+def get_employees_count():
+    with engine.connect() as conn:
+        query = select(func.count(EmployeeTable.c.id))
+        count = conn.execute(query).fetchall()[0][0]
+        return { "data": count }
+
+
 @app.get("/employee/{id}")
 def get_one_employee(id: int):
     with engine.connect() as conn:
@@ -79,8 +87,16 @@ def get_all_vehicles():
         return { "data": data }
 
 
-@app.get("/transport")
-def get_all_transports():
+@app.get("/vehicle/count")
+def get_vehicles_count():
+    with engine.connect() as conn:
+        query = select(func.count(VehicleTable.c.id))
+        count = conn.execute(query).fetchall()[0][0]
+        return { "data": count }
+
+
+@app.get("/reservation")
+def get_all_reservations():
     with engine.connect() as conn:
         query = select(
             ReservationTable.c.id,
@@ -100,6 +116,14 @@ def get_all_transports():
         data_raw = conn.execute(query).fetchall()
         data = [Transport(el[0],"{} {}".format(el[1],el[2]),el[3],"{} - {}".format(el[4],el[5])) for el in data_raw]
         return { "data": data }
+
+
+@app.get("/reservation/count")
+def get_reservations_count():
+    with engine.connect() as conn:
+        query = select(func.count(ReservationTable.c.id))
+        count = conn.execute(query).fetchall()[0][0]
+        return { "data": count }
 
 
 def load_transport_data() -> Dict[str,Any]:
