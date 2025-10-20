@@ -8,6 +8,7 @@ from sqlalchemy import create_engine, Table, MetaData, Connection, select, inser
 from config import Config
 from dto import Transport, Employee, EmployeeCreateInfo, Vehicle
 from dataclasses import asdict
+from random import randint
 
 
 cfg = Config()
@@ -191,10 +192,18 @@ def load_vehicles() -> list[Dict[str,Any]]:
     return data
 
 
+def load_reservations() -> list[Dict[str,Any]]:
+    file = open("./reservations.json","r")
+    data = json.load(file)
+    file.close()
+    return data
+
+
 def init_db() -> None:
     data = load_transport_data()
     employees = load_employees()
     vehicles = load_vehicles()
+    reservations = load_reservations()
     metadata.drop_all(engine)
     metadata.create_all(engine)
     conn = engine.connect()
@@ -212,14 +221,23 @@ def init_db() -> None:
 
     for veh in vehicles:
         try:
-            conn.execute(insert(VehicleTable),veh)
+            veh_list = [veh for _ in range(randint(5,17))]
+            conn.execute(insert(VehicleTable),veh_list)
         except:
             conn.rollback()
         finally:
             conn.commit()
 
-    conn.execute(insert(ReservationTable),data['reservation'])
-    conn.commit()
+    for res in reservations:
+        try:
+            conn.execute(insert(ReservationTable),res)
+        except:
+            conn.rollback()
+        finally:
+            conn.commit()
+
+    #conn.execute(insert(ReservationTable),data['reservation'])
+    #conn.commit()
 
     conn.close()
 
