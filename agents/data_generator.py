@@ -6,10 +6,13 @@ import json
 from datetime import datetime
 from collections import ChainMap
 from typing import Dict
+import requests
 
 
 TOKEN = os.environ.get("OPENAI_TOKEN")
 OUT_PATH = os.environ.get("OUT_PATH")
+
+API_URL = "http://localhost:8081"
 
 client = OpenAI(api_key=TOKEN)
 
@@ -68,7 +71,22 @@ def generate_vehicles():
 
 
 def generate_reservations():
-    pass
+    employees_count = requests.get("{}/employee/count".format(API_URL)).json()['data']
+    vehicle_count = requests.get("{}/employee/count".format(API_URL)).json()['data']
+    res = client.responses.create(
+        model="gpt-4o",
+        input=[
+            { "role": "system", "content": "You are returning all data in a json format" },
+            { "role": "system", "content": "You are generating random vehicles in format: { vehicle_id: int, employee_id: int, reservation_date: str, return_date: str}" },
+            { "role": "system", "content": "vehicle_id is ranging from 1 to {}, employee_id is ranging from 1 to {}, reservation_date must be before return_date"},
+            { "role": "user", "content": "generate about a 100 reservations" }
+        ]
+    ).model_dump_json()
+    data = json.loads(res)['output'][0]['content'][0]['text']
+    data = str.splitlines(data)[1:-1]
+    data = ''.join(data)
+    data = json.loads(data)
+    return data
 
 
 def generate_lots_vehicles(filename: str, n: int):
@@ -90,7 +108,9 @@ def generate_lots_vehicles(filename: str, n: int):
 def generate_lots_reservations(filename: str, n: int):
     print("prompting...")
     total = []
-    for _ in range(10):
+    print("[",end="")
+    sys.stdout.flush()
+    for _ in range(n):
         generated: list[Dict] = []
         try:
             generated = generate_reservations()
@@ -98,8 +118,12 @@ def generate_lots_reservations(filename: str, n: int):
             pass
         finally:
             total.extend(generated)
+        print("*",end="")
+        sys.stdout.flush()
+    print("]",end="")
+    sys.stdout.flush()
     file = open(filename,"w")
-    print("generated {} vehicles".format(len(total)))
+    print("generated {} reservations".format(len(total)))
     json.dump(total,file)
 
 
@@ -128,4 +152,4 @@ if __name__ == "__main__":
         case "limits": print(get_limits())
         case "genemp": generate_lots_employees(OUT_PATH,100)
         case "genveh": generate_lots_vehicles(OUT_PATH,10)
-        case "genres": raise NotImplementedError("generate lots reservations not implemented yet")
+        case "genres": generate_lots_reservations(OUT_PATH,10)
