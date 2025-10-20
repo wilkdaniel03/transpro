@@ -9,6 +9,7 @@ export interface IEmployee {
 	id: number;
 	name: string;
 	surname: string;
+	nationality: string;
 	pesel: string;
 	date_of_birth: string;
 }
