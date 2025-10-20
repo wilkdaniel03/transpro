@@ -198,9 +198,8 @@ def init_db() -> None:
     metadata.drop_all(engine)
     metadata.create_all(engine)
     conn = engine.connect()
-    conn.execute(insert(EmployeeTable),data['employee'])
-    conn.execute(insert(VehicleTable),data['vehicle'])
-    conn.execute(insert(ReservationTable),data['reservation'])
+    #conn.execute(insert(EmployeeTable),data['employee'])
+    #conn.execute(insert(VehicleTable),data['vehicle'])
     conn.commit()
 
     for emp in employees:
@@ -218,6 +217,9 @@ def init_db() -> None:
             conn.rollback()
         finally:
             conn.commit()
+
+    conn.execute(insert(ReservationTable),data['reservation'])
+    conn.commit()
 
     conn.close()
 
