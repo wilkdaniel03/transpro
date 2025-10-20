@@ -36,7 +36,7 @@ const Content = (props: { data: IDataContext }) => {
 					marginTop="15px"
 					onChange={(e: any) => paginationStore.setPageSize(parseInt(e.target.value))}
 				>
-					<chakra.NativeSelectField>
+					<chakra.NativeSelectField defaultValue={paginationStore.pageSize}>
 						<option value="5">5</option>
 						<option value="10">10</option>
 						<option value="20">20</option>

@@ -23,8 +23,8 @@ def generate_employees():
         model="gpt-4o",
         input=[
             { "role": "system", "content": "You are returning all data in a json format" },
-            { "role": "system", "content": "You are generating random users in format: { name: str, surname: str, pesel: str, date_of_birth: str}" },
-            { "role": "user", "content": "generate about a 100 users in rate: 70% polish and 30% ukrainian" }
+            { "role": "system", "content": "You are generating random users in format: { name: str, surname: str, nationality: str, pesel: str, date_of_birth: str}" },
+            { "role": "user", "content": "generate about a 100 users in rate: 50% polish and 10% ukrainian, 10% hungarian, 10% czech, 5% spanish, 5% italian" }
         ]
     ).model_dump_json()
     data = json.loads(res)['output'][0]['content'][0]['text']
@@ -34,10 +34,10 @@ def generate_employees():
     return data
 
 
-def generate_lots_employees(filename: str):
+def generate_lots_employees(filename: str, n: int):
     print("prompting...")
     total = []
-    for _ in range(10):
+    for _ in range(n):
         generated: list[Dict] = []
         try:
             generated = generate_employees()
@@ -67,13 +67,33 @@ def generate_vehicles():
     return data
 
 
-def generate_lots_vehicles(filename: str):
+def generate_reservations():
+    pass
+
+
+def generate_lots_vehicles(filename: str, n: int):
+    print("prompting...")
+    total = []
+    for _ in range(n):
+        generated: list[Dict] = []
+        try:
+            generated = generate_vehicles()
+        except:
+            pass
+        finally:
+            total.extend(generated)
+    file = open(filename,"w")
+    print("generated {} vehicles".format(len(total)))
+    json.dump(total,file)
+
+
+def generate_lots_reservations(filename: str, n: int):
     print("prompting...")
     total = []
     for _ in range(10):
         generated: list[Dict] = []
         try:
-            generated = generate_vehicles()
+            generated = generate_reservations()
         except:
             pass
         finally:
@@ -106,5 +126,6 @@ if __name__ == "__main__":
     match sys.argv[1]:
         case "models": print(list_models())
         case "limits": print(get_limits())
-        case "genemp": generate_lots_employees(OUT_PATH)
-        case "genveh": generate_lots_vehicles(OUT_PATH)
+        case "genemp": generate_lots_employees(OUT_PATH,100)
+        case "genveh": generate_lots_vehicles(OUT_PATH,10)
+        case "genres": raise NotImplementedError("generate lots reservations not implemented yet")
