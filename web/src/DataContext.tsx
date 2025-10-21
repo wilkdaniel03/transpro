@@ -37,7 +37,10 @@ const DataContext = (props: { children: ReactNode }) => {
 			fetchData(`/employee/range/0-${paginationStore.pageSize}`).then((res) => {
 				return res['data'];
 			}),
-			fetchData(`/vehicle/range/0-${paginationStore.pageSize}`).then((res) => {
+			// fetchData(`/vehicle/range/0-${paginationStore.pageSize}`).then((res) => {
+			// 	return res['data'];
+			// }),
+			fetchData(`/v2/vehicle/range/0-${paginationStore.pageSize}`).then((res) => {
 				return res['data'];
 			}),
 			fetchData(`/reservation/range/0-${paginationStore.pageSize}`).then((res) => {

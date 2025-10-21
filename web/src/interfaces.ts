@@ -21,6 +21,13 @@ export interface IVehicle {
 	destiny: string;
 }
 
+export interface IVehicleWithCount {
+	mark: string;
+	model: string;
+	destiny: string;
+	count: number;
+}
+
 export enum FetchStatus {
 	Pending = 0,
 	Success = 1,
@@ -36,9 +43,11 @@ export interface IEmployeeStore {
 
 export interface IVehicleStore {
 	count: number;
-	items: IVehicle[];
+	//items: IVehicle[];
+	items: IVehicleWithCount[];
 	setCount: (data: number) => void;
-	update: (data: IVehicle[]) => void;
+	//update: (data: IVehicle[]) => void;
+	update: (data: IVehicleWithCount[]) => void;
 }
 
 export interface ITransportStore {
