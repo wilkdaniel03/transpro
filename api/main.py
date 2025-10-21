@@ -149,9 +149,10 @@ def get_vehicles_with_count_in_range(lower: int, upper: int):
             VehicleTable.c.model,
             VehicleTable.c.destiny,
         ).alias("A")
-        q2 = select(q1).limit(upper).alias("B")
-        q3 = select(q2).limit(upper-lower + 1)
-        data_raw = conn.execute(q3).fetchall()
+        q2 = select(q1).order_by(q1.c.count.desc()).alias("B")
+        q3 = select(q2).limit(upper).alias("C")
+        q4 = select(q3).limit(upper-lower + 1)
+        data_raw = conn.execute(q4).fetchall()
         data = [VehicleCounted(*el) for el in data_raw]
         return { "data": data }
 
