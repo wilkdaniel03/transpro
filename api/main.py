@@ -134,6 +134,26 @@ def get_vehicles_in_range(lower: int, upper: int):
         data_raw = conn.execute(q3).fetchall()
         data = [Vehicle(*el) for el in data_raw]
         return { "data": data }
+    
+
+@app.get("/v2/vehicle/range/{lower}-{upper}")
+def get_vehicles_with_count_in_range(lower: int, upper: int):
+    with engine.connect() as conn:
+        q1 = select(
+            VehicleTable.c.mark,
+            VehicleTable.c.model,
+            VehicleTable.c.destiny,
+            func.count(VehicleTable.c.id)
+        ).group_by(
+            VehicleTable.c.mark,
+            VehicleTable.c.model,
+            VehicleTable.c.destiny,
+        ).alias("A")
+        q2 = select(q1).limit(upper).alias("B")
+        q3 = select(q2).limit(upper-lower + 1)
+        data_raw = conn.execute(q3).fetchall()
+        data = [VehicleCounted(*el) for el in data_raw]
+        return { "data": data }
 
 
 @app.get("/reservation")
