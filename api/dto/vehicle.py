@@ -7,3 +7,11 @@ class Vehicle:
     mark: str
     model: str
     destiny: str
+
+
+@dataclass
+class VehicleCounted:
+    mark: str
+    model: str
+    destiny: str
+    count: int

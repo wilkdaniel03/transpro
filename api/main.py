@@ -6,7 +6,7 @@ from typing import Dict, Any
 import model
 from sqlalchemy import create_engine, Table, MetaData, Connection, select, insert, func
 from config import Config
-from dto import Transport, Employee, EmployeeCreateInfo, Vehicle
+from dto import Transport, Employee, EmployeeCreateInfo, Vehicle, VehicleCounted
 from dataclasses import asdict
 from random import randint
 
@@ -96,6 +96,24 @@ def get_all_vehicles():
         query = select(VehicleTable)
         data_raw = conn.execute(query).fetchall()
         data = [Vehicle(*el) for el in data_raw]
+        return { "data": data }
+
+
+@app.get("/v2/vehicle")
+def get_all_vehicles_with_count():
+    with engine.connect() as conn:
+        query = select(
+            VehicleTable.c.mark,
+            VehicleTable.c.model,
+            VehicleTable.c.destiny,
+            func.count(VehicleTable.c.id)
+        ).group_by(
+            VehicleTable.c.mark,
+            VehicleTable.c.model,
+            VehicleTable.c.destiny
+        )
+        data_raw = conn.execute(query).fetchall()
+        data = [VehicleCounted(*el) for el in data_raw]
         return { "data": data }
 
 
