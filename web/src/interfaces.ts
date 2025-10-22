@@ -50,7 +50,7 @@ export interface IEmployeeStore extends ISorteable<keyof IEmployee> {
 	update: (data: IEmployee[]) => void;
 }
 
-export interface IVehicleStore {
+export interface IVehicleStore extends ISorteable<keyof IVehicleWithCount> {
 	count: number;
 	//items: IVehicle[];
 	items: IVehicleWithCount[];

@@ -29,7 +29,7 @@ const Content = (props: { data: IDataContext }) => {
 					<Table data={employeeStore.items} sort={employeeStore.sort}/>
 				</chakra.TabsContent>
 				<chakra.TabsContent value="vehicles">
-					<Table data={vehicleStore.items} sort={() => employeeStore.sort('id',SortDirection.ascending)}/>
+					<Table data={vehicleStore.items} sort={vehicleStore.sort}/>
 				</chakra.TabsContent>
 				<chakra.NativeSelectRoot 
 					width="100px"
