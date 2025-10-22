@@ -1,4 +1,5 @@
 import * as chakra from '@chakra-ui/react';
+import { TableField } from '../components';
 
 const TableRow = (props: { data: Object }) => {
 	return (
@@ -14,15 +15,7 @@ const Table = (props: { data: Object[] }) => {
 	if(props.data.length > 0) {
 		return (
 			<chakra.TableRoot size="md">
-				<chakra.TableHeader>
-					<chakra.TableRow>
-						{Object.keys(props.data[0]).map((el,key) => {
-							return (
-								<chakra.TableCell key={key}><chakra.Text fontWeight="bold">{el}</chakra.Text></chakra.TableCell>
-							);
-						})}
-					</chakra.TableRow>
-				</chakra.TableHeader>
+				<TableField data={Object.keys(props.data[0]).map(el => el)}/>
 				<chakra.TableBody>
 					{props.data.map((el,key) => {
 						return <TableRow key={key} data={el}/>
