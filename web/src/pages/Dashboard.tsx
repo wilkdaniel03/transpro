@@ -23,7 +23,7 @@ const Content = (props: { data: IDataContext }) => {
 					<chakra.TabsTrigger value="vehicles">Pojazdy</chakra.TabsTrigger>
 				</chakra.TabsList>
 				<chakra.TabsContent value="reservations">
-					<Table data={transportStore.items} sort={() => employeeStore.sort('id',SortDirection.ascending)}/>
+					<Table data={transportStore.items} sort={transportStore.sort}/>
 				</chakra.TabsContent>
 				<chakra.TabsContent value="employees">
 					<Table data={employeeStore.items} sort={employeeStore.sort}/>

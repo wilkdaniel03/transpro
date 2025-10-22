@@ -59,7 +59,7 @@ export interface IVehicleStore extends ISorteable<keyof IVehicleWithCount> {
 	update: (data: IVehicleWithCount[]) => void;
 }
 
-export interface ITransportStore {
+export interface ITransportStore extends ISorteable<keyof ITransport> {
 	count: number;
 	items: ITransport[];
 	setCount: (data: number) => void;
