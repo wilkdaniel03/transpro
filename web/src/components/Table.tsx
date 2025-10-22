@@ -12,6 +12,9 @@ const TableRow = (props: { data: Object }) => {
 }
 
 const Table = (props: { data: Object[] }) => {
+	const cellsEnable: boolean[] = Object.keys(props.data[0]).map(_el => true);
+	console.log(cellsEnable);
+
 	if(props.data.length > 0) {
 		return (
 			<chakra.TableRoot size="md">
