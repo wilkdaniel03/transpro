@@ -28,10 +28,14 @@ const TableFieldCell = (props: { children: React.ReactNode, enable: boolean, onC
 	
 	return (
 		<chakra.TableCell cursor="pointer" userSelect="none" onClick={() => {
-			setState((state + 1) % 3);
+			if(state == CellState.down) {
+				setState(CellState.up);
+			} else {
+				setState((state + 1) % 3);
+			}
 			props.onClick();
 		}}>
-			<chakra.Text fontWeight="bold" display="flex">{props.children}{getIcon()}</chakra.Text>
+			<chakra.Text fontWeight="bold" display="flex">{props.children}<chakra.Box marginLeft="5px">{getIcon()}</chakra.Box></chakra.Text>
 		</chakra.TableCell>
 	);
 }
