@@ -1,5 +1,6 @@
 import * as chakra from '@chakra-ui/react';
 import { TableField } from '../components';
+import { SortDirection } from '../interfaces';
 
 const TableRow = (props: { data: Object }) => {
 	return (
@@ -11,14 +12,11 @@ const TableRow = (props: { data: Object }) => {
 	);
 }
 
-const Table = (props: { data: Object[] }) => {
-	const cellsEnable: boolean[] = Object.keys(props.data[0]).map(_el => true);
-	console.log(cellsEnable);
-
+const Table = (props: { data: Object[], sort: (key: any, direction: SortDirection) => void }) => {
 	if(props.data.length > 0) {
 		return (
 			<chakra.TableRoot size="md">
-				<TableField data={Object.keys(props.data[0]).map(el => el)}/>
+				<TableField data={Object.keys(props.data[0]).map(el => el)} sort={props.sort}/>
 				<chakra.TableBody>
 					{props.data.map((el,key) => {
 						return <TableRow key={key} data={el}/>

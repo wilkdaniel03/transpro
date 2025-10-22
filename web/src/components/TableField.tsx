@@ -2,6 +2,8 @@ import * as chakra from '@chakra-ui/react';
 import { useState, useEffect, useReducer } from 'react';
 import { FaChevronUp } from "react-icons/fa";
 import { FaChevronDown } from "react-icons/fa";
+import { SortDirection } from '../interfaces';
+import { BiSort } from 'react-icons/bi';
 
 enum CellState {
 	disabled = 0,
@@ -9,7 +11,7 @@ enum CellState {
 	down = 2
 }
 
-const TableFieldCell = (props: { children: React.ReactNode, enable: boolean, onClick: () => void }) => {
+const TableFieldCell = (props: { enable: boolean, name: string, onClick: () => void, sort: (key: any, direction: SortDirection) => void }) => {
 	const [state,setState] = useState<CellState>(CellState.disabled);
 
 	useEffect(() => {
@@ -28,14 +30,25 @@ const TableFieldCell = (props: { children: React.ReactNode, enable: boolean, onC
 	
 	return (
 		<chakra.TableCell cursor="pointer" userSelect="none" onClick={() => {
+			let nextState: CellState;
+
 			if(state == CellState.down) {
 				setState(CellState.up);
+				nextState = CellState.up;
 			} else {
 				setState((state + 1) % 3);
+				nextState = (state + 1) % 3;
 			}
+
+			if(nextState == CellState.up) {
+				props.sort(props.name,SortDirection.ascending);
+			} else if(nextState == CellState.down) {
+				props.sort(props.name,SortDirection.descending);
+			}
+
 			props.onClick();
 		}}>
-			<chakra.Text fontWeight="bold" display="flex">{props.children}<chakra.Box marginLeft="5px">{getIcon()}</chakra.Box></chakra.Text>
+			<chakra.Text fontWeight="bold" display="flex">{props.name}{getIcon()}</chakra.Text>
 		</chakra.TableCell>
 	);
 }
@@ -47,7 +60,7 @@ const reducer = (state: boolean[], index: number) => {
 	})
 };
 
-const TableField = (props: { data: string[] }) => {
+const TableField = (props: { data: string[], sort: (key: any, direction: SortDirection) => void }) => {
 	const [state,dispatch] = useReducer(reducer,props.data.map(_el => false));
 
 	return (
@@ -55,7 +68,7 @@ const TableField = (props: { data: string[] }) => {
 			<chakra.TableRow>
 				{props.data.map((el,key) => {
 					return (
-						<TableFieldCell key={key} enable={state[key]} onClick={() => dispatch(key)}>{el}</TableFieldCell>
+						<TableFieldCell key={key} name={el} enable={state[key]} onClick={() => dispatch(key)} sort={props.sort}/>
 					);
 				})}
 			</chakra.TableRow>

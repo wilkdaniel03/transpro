@@ -3,7 +3,7 @@ import * as chakra from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 import { Heading, Card, Table } from '../components';
 import { dataCtx } from '../DataContext';
-import { FetchStatus, type IDataContext } from '../interfaces';
+import { FetchStatus, SortDirection, type IDataContext } from '../interfaces';
 import { FaChevronUp } from "react-icons/fa";
 import { IoIosAddCircleOutline } from 'react-icons/io';
 import { useEmployeeStore, useVehicleStore, useTransportStore, usePaginationStore } from '../stores';
@@ -23,13 +23,13 @@ const Content = (props: { data: IDataContext }) => {
 					<chakra.TabsTrigger value="vehicles">Pojazdy</chakra.TabsTrigger>
 				</chakra.TabsList>
 				<chakra.TabsContent value="reservations">
-					<Table data={transportStore.items}/>
+					<Table data={transportStore.items} sort={() => employeeStore.sort('id',SortDirection.ascending)}/>
 				</chakra.TabsContent>
 				<chakra.TabsContent value="employees">
-					<Table data={employeeStore.items}/>
+					<Table data={employeeStore.items} sort={employeeStore.sort}/>
 				</chakra.TabsContent>
 				<chakra.TabsContent value="vehicles">
-					<Table data={vehicleStore.items}/>
+					<Table data={vehicleStore.items} sort={() => employeeStore.sort('id',SortDirection.ascending)}/>
 				</chakra.TabsContent>
 				<chakra.NativeSelectRoot 
 					width="100px"

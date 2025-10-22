@@ -34,7 +34,16 @@ export enum FetchStatus {
 	Failed = 2
 }
 
-export interface IEmployeeStore {
+export enum SortDirection {
+	ascending = 0,
+	descending = 1
+}
+
+interface ISorteable<T> {
+	sort: (key: T, direction: SortDirection) => void;
+}
+
+export interface IEmployeeStore extends ISorteable<keyof IEmployee> {
 	count: number;
 	items: IEmployee[];
 	setCount: (data: number) => void;
