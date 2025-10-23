@@ -1,0 +1,16 @@
+services:
+  front:
+    build: ./web
+    image: transport-front
+    ports:
+      - 8080:8080
+    container_name: transport-front
+    depends_on:
+      - api
+  api:
+    build: ./api
+    image: transport-api
+    ports:
+      - 8081:8081
+    container_name: transport-api
+    network_mode: host
