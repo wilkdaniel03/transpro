@@ -17,3 +17,9 @@ uv
 uv sync
 uv run main.py
 ```
+
+### Docker
+```bash
+docker build -t transport-api:1.0 .
+docker run --name api -d -p 8081:8081 transport-api:1.0
+```

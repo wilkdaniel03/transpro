@@ -285,4 +285,4 @@ if __name__ == "__main__":
     should_reload = cfg.mode != "PROD"
     if cfg.mode == "PROD":
         init_db()
-    uvicorn.run("main:app",port=8081,reload=should_reload)
+    uvicorn.run("main:app",port=8081,reload=should_reload,host="0.0.0.0")
