@@ -5,19 +5,18 @@ services:
     ports:
       - 8080:8080
     container_name: transport-front
-    depends_on:
-      - api
+    network_mode: host
   api:
     build: ./api
     image: transport-api
     ports:
       - 8081:8081
     container_name: transport-api
-    depends_on:
-      - db
+    network_mode: host
   db:
     build: ./db
     image: transport-db
     ports:
       - 3306:3306
     container_name: transport-db
+    network_mode: host

@@ -9,6 +9,7 @@ from config import Config
 from dto import Transport, Employee, EmployeeCreateInfo, Vehicle, VehicleCounted
 from dataclasses import asdict
 from random import randint
+import time
 
 
 cfg = Config()
@@ -250,6 +251,8 @@ def init_db() -> None:
     #conn.execute(insert(VehicleTable),data['vehicle'])
     conn.commit()
 
+    print("Loading employee table...")
+
     for emp in employees:
         try:
             conn.execute(insert(EmployeeTable),emp)
@@ -257,6 +260,8 @@ def init_db() -> None:
             conn.rollback()
         finally:
             conn.commit()
+
+    print("Loading vehicle table...")
 
     for veh in vehicles:
         try:
@@ -266,6 +271,8 @@ def init_db() -> None:
             conn.rollback()
         finally:
             conn.commit()
+
+    print("Loading reservation table...")
 
     for res in reservations:
         try:
@@ -283,6 +290,13 @@ def init_db() -> None:
 
 if __name__ == "__main__":
     should_reload = cfg.mode != "PROD"
-    if cfg.mode == "PROD":
-        init_db()
-    uvicorn.run("main:app",port=8081,reload=should_reload,host="0.0.0.0")
+    while True:
+        try:
+            init_db()
+        except:
+            print("failed")
+            time.sleep(1)
+        else:
+            break
+
+    uvicorn.run("main:app",port=8081,reload=should_reload)
