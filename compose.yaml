@@ -13,4 +13,11 @@ services:
     ports:
       - 8081:8081
     container_name: transport-api
-    network_mode: host
+    depends_on:
+      - db
+  db:
+    build: ./db
+    image: transport-db
+    ports:
+      - 3306:3306
+    container_name: transport-db
